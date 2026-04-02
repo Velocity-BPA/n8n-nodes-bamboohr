@@ -8,32 +8,32 @@
 >
 > For licensing information, visit https://velobpa.com/licensing or contact licensing@velobpa.com.
 
-A comprehensive n8n community node for BambooHR, providing complete HR automation capabilities including employee management, time off tracking, benefits administration, goals management, time tracking, and webhook integrations.
+This n8n community node provides comprehensive integration with BambooHR's human resources management platform. With 6 core resources and extensive operations, it enables complete automation of employee data management, time tracking, goal setting, reporting, and file management workflows within your HR processes.
 
-![n8n](https://img.shields.io/badge/n8n-community--node-orange)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![n8n Community Node](https://img.shields.io/badge/n8n-Community%20Node-blue)
 ![License](https://img.shields.io/badge/license-BSL--1.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
+![BambooHR](https://img.shields.io/badge/BambooHR-HR%20Platform-green)
+![API](https://img.shields.io/badge/API-REST-orange)
+![HR](https://img.shields.io/badge/HR-Automation-purple)
 
 ## Features
 
-- **9 Resource Categories** with 54+ operations for complete BambooHR API coverage
-- **Employee Management** - Create, update, and manage employee records with custom fields
-- **Time Off Tracking** - Handle time off requests, balances, policies, and approvals
-- **Employee Files** - Upload, download, and manage employee documents
-- **Benefits Administration** - Access benefit plans, enrollments, and deductions
-- **Goals Management** - Track and update employee goals and progress
-- **Time Tracking** - Manage timesheets, clock entries, and approvals
-- **Custom Reports** - Generate standard and custom HR reports
-- **Custom Tables** - Work with BambooHR custom table data
-- **Webhooks** - Set up event-driven integrations
+- **Employee Management** - Complete CRUD operations for employee records, profiles, and directory listings
+- **Time Off Management** - Handle time off requests, approvals, balances, and policy administration
+- **Advanced Reporting** - Generate custom reports with flexible filtering and export capabilities
+- **File Management** - Upload, download, and manage employee files and company documents
+- **Goal Tracking** - Create, update, and monitor employee goals and performance metrics
+- **Time Tracking** - Record and manage employee time entries and timesheets
+- **Bulk Operations** - Efficient batch processing for large-scale HR data operations
+- **Error Handling** - Comprehensive error management with detailed feedback and retry logic
 
 ## Installation
 
 ### Community Nodes (Recommended)
 
-1. Open your n8n instance
-2. Go to **Settings** > **Community Nodes**
+1. Open n8n
+2. Go to **Settings** → **Community Nodes**
 3. Click **Install a community node**
 4. Enter `n8n-nodes-bamboohr`
 5. Click **Install**
@@ -41,32 +41,19 @@ A comprehensive n8n community node for BambooHR, providing complete HR automatio
 ### Manual Installation
 
 ```bash
-# Navigate to your n8n installation directory
 cd ~/.n8n
-
-# Install the package
 npm install n8n-nodes-bamboohr
-
-# Restart n8n
 ```
 
 ### Development Installation
 
 ```bash
-# Clone or extract the repository
+git clone https://github.com/Velocity-BPA/n8n-nodes-bamboohr.git
 cd n8n-nodes-bamboohr
-
-# Install dependencies
 npm install
-
-# Build the project
 npm run build
-
-# Create symlink to n8n custom nodes directory
 mkdir -p ~/.n8n/custom
 ln -s $(pwd) ~/.n8n/custom/n8n-nodes-bamboohr
-
-# Restart n8n
 n8n start
 ```
 
@@ -74,255 +61,157 @@ n8n start
 
 | Field | Description | Required |
 |-------|-------------|----------|
-| Company Domain | Your BambooHR subdomain (e.g., `yourcompany` from `yourcompany.bamboohr.com`) | Yes |
-| API Key | API key from BambooHR Settings > API Keys | Yes |
-
-### Obtaining API Credentials
-
-1. Log in to your BambooHR account
-2. Navigate to **Account** > **API Keys**
-3. Click **Add New Key**
-4. Enter a name for the key and save
-5. Copy the generated API key (it will only be shown once)
+| API Key | Your BambooHR API key from Settings > API Keys | Yes |
+| Subdomain | Your BambooHR subdomain (e.g., 'company' for company.bamboohr.com) | Yes |
+| Test Connection | Validates credentials against BambooHR API | No |
 
 ## Resources & Operations
 
-### Employee
+### 1. Employee
 
 | Operation | Description |
 |-----------|-------------|
-| Create | Add a new employee to BambooHR |
-| Get | Retrieve an employee by ID |
-| Get All | List all employees with optional filters |
-| Get Directory | Get the full employee directory |
-| Update | Update employee information |
-| Get Fields | Get available employee fields |
-| Get Changed Employees | Get employees modified since a timestamp |
-| Upload Photo | Upload a photo for an employee |
+| Get | Retrieve employee information by ID |
+| Get All | List all employees with optional filtering |
+| Create | Add new employee record |
+| Update | Modify existing employee information |
+| Delete | Remove employee from system |
+| Get Directory | Retrieve employee directory with contact information |
+| Get Profile Photo | Download employee profile picture |
+| Upload Profile Photo | Set employee profile picture |
 
-### Employee File
-
-| Operation | Description |
-|-----------|-------------|
-| List Categories | Get all file categories |
-| Add Category | Create a new file category |
-| List Files | List files for an employee |
-| Upload File | Upload a file for an employee |
-| Get File | Download an employee file |
-| Update File | Update file metadata |
-| Delete File | Delete an employee file |
-
-### Time Off
+### 2. Time Off
 
 | Operation | Description |
 |-----------|-------------|
-| Get Requests | List time off requests |
-| Create Request | Submit a time off request |
-| Update Request Status | Approve, deny, or cancel a request |
-| Get Balances | Get time off balances for an employee |
-| Get Policies | List time off policies |
-| Get Types | List time off types |
-| Add History | Add a time off history entry |
-| Estimate Future Balance | Calculate future time off balance |
+| Get | Retrieve specific time off request details |
+| Get All | List time off requests with filtering options |
+| Create | Submit new time off request |
+| Update | Modify existing time off request |
+| Approve | Approve pending time off request |
+| Deny | Reject time off request |
+| Cancel | Cancel approved time off request |
+| Get Balance | Check employee time off balances |
+| Get Policies | Retrieve time off policies and rules |
 
-### Report
-
-| Operation | Description |
-|-----------|-------------|
-| Get Report | Retrieve a standard report |
-| Create Custom Report | Generate a custom report with selected fields |
-| List Reports | Get available reports |
-
-### Table
+### 3. Report
 
 | Operation | Description |
 |-----------|-------------|
-| Get Table Data | Get rows from a custom table |
-| Add Table Row | Add a row to a custom table |
-| Update Table Row | Update a table row |
-| Delete Table Row | Delete a table row |
-| Get Table List | List available tables |
+| Generate | Create custom report with specified parameters |
+| Get | Download existing report by ID |
+| Get All | List available reports |
+| Delete | Remove report from system |
+| Schedule | Set up automated report generation |
+| Get Fields | Retrieve available report fields |
+| Export | Export report in various formats (PDF, CSV, Excel) |
 
-### Benefit
-
-| Operation | Description |
-|-----------|-------------|
-| Get Benefit Plans | List benefit plans |
-| Get Benefit Groups | List benefit groups |
-| Get Enrollments | Get benefit enrollments |
-| Update Enrollment | Update an enrollment |
-| Get Benefit Deductions | Get deduction information |
-| Get Benefit Dependents | Get dependent information |
-
-### Goal
+### 4. Company File
 
 | Operation | Description |
 |-----------|-------------|
-| Get Goals | List employee goals |
-| Create Goal | Create a new goal |
-| Update Goal | Update goal details |
-| Delete Goal | Delete a goal |
-| Get Goal Status | Get goal progress details |
-| Update Goal Progress | Update progress percentage |
-| Close Goal | Mark a goal as closed |
+| Get | Download company file by ID |
+| Get All | List all company files |
+| Upload | Add new company file |
+| Update | Modify company file metadata |
+| Delete | Remove company file |
+| Get Categories | Retrieve file categories |
+| Share | Share file with specific employees |
 
-### Time Tracking
-
-| Operation | Description |
-|-----------|-------------|
-| Get Timesheets | Get timesheet data |
-| Get Clock Entries | List clock entries |
-| Add Clock Entry | Create a clock entry |
-| Update Clock Entry | Update a clock entry |
-| Delete Clock Entry | Delete a clock entry |
-| Get Daily Entries | Get daily time entries |
-| Approve Timesheets | Approve timesheet entries |
-
-### Webhook
+### 5. Goal
 
 | Operation | Description |
 |-----------|-------------|
-| Create | Register a new webhook |
-| Get All | List all webhooks |
-| Delete | Remove a webhook |
+| Get | Retrieve specific goal details |
+| Get All | List goals with filtering options |
+| Create | Create new employee goal |
+| Update | Modify existing goal |
+| Delete | Remove goal |
+| Complete | Mark goal as completed |
+| Get Progress | Check goal completion progress |
+| Get Comments | Retrieve goal comments and feedback |
+
+### 6. Time Tracking
+
+| Operation | Description |
+|-----------|-------------|
+| Get | Retrieve time entry details |
+| Get All | List time entries with date range filtering |
+| Create | Add new time entry |
+| Update | Modify existing time entry |
+| Delete | Remove time entry |
+| Get Timesheet | Retrieve employee timesheet for period |
+| Approve | Approve timesheet entries |
+| Get Projects | List available time tracking projects |
 
 ## Usage Examples
 
-### Create an Employee
-
 ```javascript
-// Create a new employee with basic information
-{
-  "resource": "employee",
-  "operation": "create",
+// Create a new employee
+const newEmployee = {
   "firstName": "John",
   "lastName": "Doe",
-  "additionalFields": {
-    "workEmail": "john.doe@company.com",
+  "workEmail": "john.doe@company.com",
+  "jobTitle": "Software Engineer",
+  "department": "Engineering",
+  "hireDate": "2024-01-15",
+  "location": "San Francisco"
+};
+```
+
+```javascript
+// Submit time off request
+const timeOffRequest = {
+  "employeeId": "12345",
+  "timeOffTypeId": "1",
+  "startDate": "2024-03-15",
+  "endDate": "2024-03-17",
+  "amount": "24",
+  "notes": "Spring vacation with family"
+};
+```
+
+```javascript
+// Generate custom employee report
+const reportParams = {
+  "format": "PDF",
+  "fields": ["firstName", "lastName", "jobTitle", "department", "hireDate"],
+  "filters": {
     "department": "Engineering",
-    "jobTitle": "Software Developer",
-    "hireDate": "2024-01-15"
+    "status": "Active"
   }
-}
+};
 ```
-
-### Submit a Time Off Request
 
 ```javascript
-// Create a time off request
-{
-  "resource": "timeOff",
-  "operation": "createRequest",
-  "employeeId": "123",
-  "timeOffTypeId": "78",
-  "startDate": "2024-06-01",
-  "endDate": "2024-06-05",
-  "amount": 40,
-  "note": "Family vacation"
-}
+// Create employee goal
+const employeeGoal = {
+  "employeeId": "12345",
+  "title": "Complete React Certification",
+  "description": "Obtain React developer certification by Q2 2024",
+  "dueDate": "2024-06-30",
+  "milestones": ["Complete online course", "Pass practice exam", "Schedule certification"]
+};
 ```
-
-### Generate a Custom Report
-
-```javascript
-// Create a custom report with specific fields
-{
-  "resource": "report",
-  "operation": "createCustomReport",
-  "title": "Employee Directory",
-  "fields": ["firstName", "lastName", "department", "jobTitle", "workEmail"],
-  "format": "JSON"
-}
-```
-
-### Track Time
-
-```javascript
-// Add a clock entry
-{
-  "resource": "timeTracking",
-  "operation": "addClockEntry",
-  "employeeId": "123",
-  "date": "2024-03-15",
-  "clockIn": "09:00",
-  "clockOut": "17:30",
-  "projectId": "456",
-  "note": "Project work"
-}
-```
-
-## BambooHR Concepts
-
-### Employee Fields
-
-BambooHR supports both standard and custom fields for employees. Standard fields include:
-
-- **Personal**: firstName, lastName, dateOfBirth, ssn, gender
-- **Contact**: workEmail, homeEmail, workPhone, mobilePhone, address
-- **Employment**: hireDate, department, division, jobTitle, location
-- **Compensation**: payRate, payType, payPer, paySchedule
-
-Use the "Get Fields" operation to discover all available fields in your account.
-
-### Time Off Types
-
-Time off in BambooHR is categorized by types (vacation, sick, personal, etc.). Each type can have:
-
-- Different accrual policies
-- Balance tracking
-- Approval workflows
-
-### Custom Tables
-
-BambooHR uses custom tables for structured data like:
-
-- Job history (jobInfo)
-- Employment status history
-- Compensation history
-- Custom data tables
 
 ## Error Handling
 
-The node implements comprehensive error handling:
-
-- **Rate Limiting**: Automatic exponential backoff for 503 responses
-- **Authentication Errors**: Clear messages for invalid credentials
-- **Validation Errors**: Detailed field-level error information
-- **Continue On Fail**: Option to continue workflow on errors
-
-## Security Best Practices
-
-1. **API Key Security**: Store API keys securely using n8n credentials
-2. **Minimal Permissions**: Use API keys with only required permissions
-3. **Audit Access**: Regularly review API key usage in BambooHR
-4. **Secure Webhooks**: Use HTTPS endpoints for webhook URLs
-5. **Data Handling**: Be mindful of sensitive HR data in workflows
+| Error | Description | Solution |
+|-------|-------------|----------|
+| 401 Unauthorized | Invalid API key or subdomain | Verify credentials in node configuration |
+| 403 Forbidden | Insufficient permissions for operation | Contact BambooHR admin to grant required permissions |
+| 404 Not Found | Employee, report, or resource doesn't exist | Verify the ID exists and user has access |
+| 429 Rate Limited | Too many API requests | Implement delays between requests or reduce frequency |
+| 400 Bad Request | Invalid request parameters or data format | Check required fields and data types |
+| 500 Internal Server Error | BambooHR server error | Retry request after delay or contact BambooHR support |
 
 ## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Build the project
 npm run build
-
-# Run tests
 npm test
-
-# Run tests with coverage
-npm run test:coverage
-
-# Lint code
 npm run lint
-
-# Fix linting issues
-npm run lint:fix
-
-# Format code
-npm run format
-
-# Watch mode for development
 npm run dev
 ```
 
@@ -337,11 +226,9 @@ npm run dev
 This n8n community node is licensed under the **Business Source License 1.1**.
 
 ### Free Use
-
 Permitted for personal, educational, research, and internal business use.
 
 ### Commercial Use
-
 Use of this node within any SaaS, PaaS, hosted platform, managed service, or paid automation offering requires a commercial license.
 
 For licensing inquiries: **licensing@velobpa.com**
@@ -350,26 +237,16 @@ See [LICENSE](LICENSE), [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md), and [LIC
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please ensure:
 
-Please ensure:
-- All tests pass
-- Code follows the existing style
-- New features include tests
-- Documentation is updated
+1. Code follows existing style conventions
+2. All tests pass (`npm test`)
+3. Linting passes (`npm run lint`)
+4. Documentation is updated for new features
+5. Commit messages are descriptive
 
 ## Support
 
-- **Documentation**: [BambooHR API Documentation](https://documentation.bamboohr.com/reference)
 - **Issues**: [GitHub Issues](https://github.com/Velocity-BPA/n8n-nodes-bamboohr/issues)
-- **n8n Community**: [n8n Community Forum](https://community.n8n.io/)
-
-## Acknowledgments
-
-- [BambooHR](https://www.bamboohr.com/) for their comprehensive HR platform and API
-- [n8n](https://n8n.io/) for the workflow automation platform
-- The n8n community for inspiration and best practices
+- **BambooHR API Documentation**: [BambooHR API Reference](https://documentation.bamboohr.com/reference)
+- **BambooHR Community**: [BambooHR Help Center](https://help.bamboohr.com/)
